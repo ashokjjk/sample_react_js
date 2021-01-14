@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "sessions/*.json",
+        "README",
+        "mockdata/*.json",
+        "mockdata/course.json"
+    ]
+}
