@@ -15,5 +15,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+ENV MONGO_LOCAL_CONN_URL=mongodb://172.20.0.2:27017/test
+ENV PORT=3000
+
 EXPOSE 3000
 CMD [ "node", "index.js" ]
