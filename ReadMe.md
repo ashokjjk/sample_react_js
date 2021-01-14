@@ -1,7 +1,7 @@
 ## Simple 3-Tier microservice application
 1. ReactJS
 2. NodeJS
-3 MongoDB
+3. MongoDB
 
 ### Docker commands
 ```
