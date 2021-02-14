@@ -3,26 +3,26 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: mongodb
-  name: mongodb
+    app: frontend
+  name: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: frontend
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: mongodb
+        app: frontend
     spec:
       containers:
-      - image: mongo
-        name: mongo
+      - image: reactapp
+        name: frontend
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 27017
+        - containerPort: 80
         resources: {}
 status: {}
 ---
@@ -31,16 +31,14 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: mongodb
-  name: mongodb
+    app: frontend
+  name: frontend
 spec:
   ports:
-  - name: mongodb
-    port: 27017
+  - name: frontend
+    port: 80
     protocol: TCP
-    targetPort: 27017
+    targetPort: 80
   selector:
-    app: mongodb
+    app: frontend
   type: ClusterIP
-status:
-  loadBalancer: {}

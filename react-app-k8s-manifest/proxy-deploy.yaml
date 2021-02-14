@@ -3,44 +3,42 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: mongodb
-  name: mongodb
+    app: proxy
+  name: proxy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: proxy
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: mongodb
+        app: proxy
     spec:
       containers:
-      - image: mongo
-        name: mongo
+      - image: ashokjjk/react-ingress
+        name: react-f
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 27017
-        resources: {}
-status: {}
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: mongodb
-  name: mongodb
+    app: proxy
+  name: proxy
 spec:
   ports:
-  - name: mongodb
-    port: 27017
+  - name: proxy
+    port: 80
     protocol: TCP
-    targetPort: 27017
+    targetPort: 80
   selector:
-    app: mongodb
-  type: ClusterIP
+    app: proxy
+  type: LoadBalancer
 status:
   loadBalancer: {}

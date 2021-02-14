@@ -1,0 +1,113 @@
+{
+  "chaoslib-version": "1.16.0",
+  "platform": "Windows-10-10.0.19041-SP0",
+  "node": "DESKTOP-B9OK101",
+  "experiment": {
+    "version": "1.0.0",
+    "title": "Create a deploy and add turbulence",
+    "description": "N/A",
+    "tags": [],
+    "steady-state-hypothesis": {
+      "title": "Running peacefully",
+      "probes": [
+        {
+          "type": "probe",
+          "name": "deployment_is_not_fully_available",
+          "provider": {
+            "type": "python",
+            "module": "chaosk8s.probes",
+            "func": "deployment_is_not_fully_available",
+            "arguments": {
+              "name": "probe-name",
+              "ns": "default",
+              "label_selector": "app=webapp",
+              "timeout": 10
+            }
+          },
+          "tolerance": true
+        }
+      ]
+    },
+    "method": [
+      {
+        "type": "action",
+        "name": "create_deployment",
+        "provider": {
+          "type": "python",
+          "module": "chaosk8s.deployment.actions",
+          "func": "create_deployment",
+          "arguments": {
+            "spec_path": "deploy.yaml",
+            "ns": "default"
+          }
+        }
+      }
+    ],
+    "rollbacks": [
+      {
+        "type": "action",
+        "name": "delete_deployment",
+        "provider": {
+          "type": "python",
+          "module": "chaosk8s.deployment.actions",
+          "func": "delete_deployment",
+          "arguments": {
+            "name": "delete-deployment",
+            "ns": "default",
+            "label_selector": "app=webapp"
+          }
+        }
+      }
+    ],
+    "dry": false
+  },
+  "start": "2021-01-20T16:38:03.551762",
+  "status": "failed",
+  "deviated": false,
+  "steady_states": {
+    "before": {
+      "steady_state_met": false,
+      "probes": [
+        {
+          "activity": {
+            "type": "probe",
+            "name": "deployment_is_not_fully_available",
+            "provider": {
+              "type": "python",
+              "module": "chaosk8s.probes",
+              "func": "deployment_is_not_fully_available",
+              "arguments": {
+                "name": "probe-name",
+                "ns": "default",
+                "label_selector": "app=webapp",
+                "timeout": 10
+              }
+            },
+            "tolerance": true
+          },
+          "output": null,
+          "status": "failed",
+          "exception": [
+            "Traceback (most recent call last):\n",
+            "  File \"c:\\users\\ashok kumar\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\chaoslib\\provider\\python.py\", line 55, in run_python_activity\n    return func(**arguments)\n",
+            "  File \"c:\\users\\ashok kumar\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\chaosk8s\\probes.py\", line 75, in deployment_is_not_fully_available\n    return deployment_not_fully_available(name, ns, label_selector, timeout,\n",
+            "  File \"c:\\users\\ashok kumar\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\chaosk8s\\deployment\\probes.py\", line 139, in deployment_not_fully_available\n    raise ActivityFailed(\n",
+            "chaoslib.exceptions.ActivityFailed: deployment 'probe-name' failed to stop running within 10s\n",
+            "\nDuring handling of the above exception, another exception occurred:\n\n",
+            "chaoslib.exceptions.ActivityFailed: chaoslib.exceptions.ActivityFailed: deployment 'probe-name' failed to stop running within 10s\n"
+          ],
+          "start": "2021-01-20T16:38:03.551762",
+          "end": "2021-01-20T16:38:13.572972",
+          "duration": 10.02121,
+          "tolerance_met": false
+        }
+      ]
+    },
+    "after": null,
+    "during": []
+  },
+  "run": [],
+  "rollbacks": [],
+  "end": "2021-01-20T16:38:13.573983",
+  "duration": 10.022221088409424
+}

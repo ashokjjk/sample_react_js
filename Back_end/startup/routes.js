@@ -27,6 +27,11 @@ module.exports = function(app) {
     app.use(express.urlencoded({ extended: false }));
     //form-urlencoded
 
+    // app.use(function (req, res, next) {
+    //     console.log(req) // populated!
+    //     next()
+    //   })
+
     // view engine setup
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'jade');

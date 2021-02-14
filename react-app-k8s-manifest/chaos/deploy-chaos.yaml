@@ -1,0 +1,40 @@
+version: 1.0.0
+title: Create a deploy and add turbulence
+description: N/A
+tags: []
+steady-state-hypothesis:
+    title: Running peacefully
+    probes:
+    -   type: probe
+        name: deployment_is_not_fully_available
+        provider:
+            type: python
+            module: chaosk8s.probes
+            func: deployment_is_not_fully_available
+            arguments:
+                name: probe-name
+                ns: default
+                label_selector: app=webapp
+                timeout: 10
+        tolerance: true
+method:
+-   type: action
+    name: create_deployment
+    provider:
+        type: python
+        module: chaosk8s.deployment.actions
+        func: create_deployment
+        arguments:
+            spec_path: deploy.yaml
+            ns: default
+rollbacks:
+-   type: action
+    name: delete_deployment
+    provider:
+        type: python
+        module: chaosk8s.deployment.actions
+        func: delete_deployment
+        arguments:
+            name: delete-deployment
+            ns: default
+            label_selector: app=webapp

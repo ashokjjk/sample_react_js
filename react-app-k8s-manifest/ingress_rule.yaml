@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: reactapp-ingress
+spec:
+  rules:
+  - host:  localhost
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+      - path: /api/*
+        backend:
+          serviceName: backend
+          servicePort: 80
+          

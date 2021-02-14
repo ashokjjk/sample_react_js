@@ -20,11 +20,12 @@ spec:
       containers:
       - image: ashokjjk/react-f
         name: react-f
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3001
+        - containerPort: 80
         env:
-        - name: REACT_APP_BACK_API
-          value: http://localhost:30007/api
+        - name: "REACT_APP_BACK_API"
+          value: ""
         resources: {}
 status: {}
 ---
@@ -38,11 +39,11 @@ metadata:
 spec:
   ports:
   - name: frontend
-    port: 3001
+    port: 80
     protocol: TCP
-    targetPort: 3001
+    targetPort: 80
   selector:
     app: frontend
-  type: LoadBalancer
+  type: ClusterIP
 status:
   loadBalancer: {}
